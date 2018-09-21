@@ -57,8 +57,13 @@
         <h3><a href="/">Customer Order System</a></h3>
         <div class="mdl-layout-spacer"></div>
         <div id="spinner" class="mdl-spinner mdl-js-spinner"></div>
-        <!-- TODO: Add Google Sign-in button -->
-
+        <!-- DONE: Add Google Sign-in button -->
+<!-- the following code renders the sign-in button and displays the signed-in user's information -->
+<div id="profile" style="margin: 0 20px;">
+  <b class="name"></b><br/>
+  <i class="email"></i>
+</div>
+<div class="g-signin2" data-onsucess="onSignIn"></div>
 
       </div>
       <div class="mdl-layout--large-screen-only mdl-layout__header-row"></div>
