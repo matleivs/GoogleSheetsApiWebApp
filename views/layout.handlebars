@@ -38,8 +38,15 @@
   <link rel="stylesheet" href="/styles.css">
   <script src="/script.js"></script>
 
-  <!-- TODO: Add Google Sign-in library -->
-
+  <!-- DONE: Add Google Sign-in library -->
+<!-- request the scope, since the application needs read and write access to the user's spreadsheets -->
+<meta name="google-signin-scope"
+      content="https://www.googleapis.com/auth/spreadsheets">
+<!-- set the OAuth2 client ID to use -->
+<meta name="google-signin-client_id" 
+      content="{1093798358408-teqcekbckbf8foje7ktv0co3047p9cj4.apps.googleusercontent.com}" <!-- my OAuth2 client ID --> 
+<!-- include the Google Sign-in library -->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 
 </head>
 <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
