@@ -24,27 +24,37 @@ var router = express.Router();
 var models = require('./models');
 var Sequelize = require('sequelize');
 
-// TODO: Show spreadsheets on the main page.
-router.get('/', function(req, res, next) {
+// DONE: Show spreadsheets on the main page.
+// Fetch all spreadsheets we've stored on load of the index page, to display them in a list
+router.get('/', function (req, res, next) {
   var options = {
     order: [['createdAt', 'DESC']]
   };
-  models.Order.findAll(options)
-  .then(function(orders) {
+  Sequelize.Promise.all([
+    models.Order.findAll(options),
+    models.Spreadsheet.findAll(options)
+  ]).then(function (results) {
     res.render('index', {
-      orders: orders
+      orders: results[0],
+      spreadsheets: results[1]
     });
-  }, function(err) {
-    next(err);
   });
+  models.Order.findAll(options)
+    .then(function (orders) {
+      res.render('index', {
+        orders: orders
+      });
+    }, function (err) {
+      next(err);
+    });
 });
 
-router.get('/create', function(req, res, next) {
+router.get('/create', function (req, res, next) {
   res.render('upsert');
 });
 
-router.get('/edit/:id', function(req, res, next) {
-  models.Order.findById(req.params.id).then(function(order) {
+router.get('/edit/:id', function (req, res, next) {
+  models.Order.findById(req.params.id).then(function (order) {
     if (order) {
       res.render('upsert', {
         order: order
@@ -55,25 +65,25 @@ router.get('/edit/:id', function(req, res, next) {
   });
 });
 
-router.get('/delete/:id', function(req, res, next) {
+router.get('/delete/:id', function (req, res, next) {
   models.Order.findById(req.params.id)
-    .then(function(order) {
+    .then(function (order) {
       if (!order) {
         throw new Error('Order not found: ' + req.params.id);
       }
       return order.destroy();
     })
-    .then(function() {
+    .then(function () {
       res.redirect('/');
-    }, function(err) {
+    }, function (err) {
       next(err);
     });
 });
 
-router.post('/upsert', function(req, res, next) {
-  models.Order.upsert(req.body).then(function() {
+router.post('/upsert', function (req, res, next) {
+  models.Order.upsert(req.body).then(function () {
     res.redirect('/');
-  }, function(err) {
+  }, function (err) {
     next(err);
   });
 });

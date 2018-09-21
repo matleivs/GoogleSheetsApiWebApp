@@ -27,32 +27,66 @@
         </div>
         <div class="mdl-card__supporting-text">
           <table class="order-details">
-            <tr><th>Customer</th><td>{{customerName}}</td></tr>
-            <tr><th>Product code</th><td>{{productCode}}</td></tr>
-            <tr><th>Units ordered</th><td>{{unitsOrdered}}</td></tr>
-            <tr><th>Unit price (USD)</th><td>{{unitPrice}}</td></tr>
-            <tr><th>Status</th><td>{{status}}</td></tr>
+            <tr>
+              <th>Customer</th>
+              <td>{{customerName}}</td>
+            </tr>
+            <tr>
+              <th>Product code</th>
+              <td>{{productCode}}</td>
+            </tr>
+            <tr>
+              <th>Units ordered</th>
+              <td>{{unitsOrdered}}</td>
+            </tr>
+            <tr>
+              <th>Unit price (USD)</th>
+              <td>{{unitPrice}}</td>
+            </tr>
+            <tr>
+              <th>Status</th>
+              <td>{{status}}</td>
+            </tr>
           </table>
         </div>
         <div class="mdl-card__actions">
           <a class="mdl-button mdl-button--colored mdl-js-button
-                    mdl-js-ripple-effect"
-             href="/edit/{{id}}">Edit</a>
-          <a class="mdl-button mdl-js-button mdl-js-ripple-effect"
-             href="/delete/{{id}}">Delete</a>
+                    mdl-js-ripple-effect" href="/edit/{{id}}">Edit</a>
+          <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="/delete/{{id}}">Delete</a>
         </div>
       </div>
       {{/each}}
-       <a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect
-                 mdl-button--colored mdl-shadow--4dp mdl-color--accent"
-          href="/create">
+      <a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect
+                 mdl-button--colored mdl-shadow--4dp mdl-color--accent" href="/create">
         <i class="material-icons" role="presentation">add</i>
         <span class="visuallyhidden">Add</span>
       </a>
     </div>
   </section>
 
-  <!-- TODO: Show spreadsheets -->
-
-
-</div>
+  <!-- DONE: Show spreadsheets -->
+  <!-- Display the list of spreadsheets in the template -->
+  <section id="spreadsheets" class="mdl-cell mdl-cell--4-col relative">
+    <div class="mdl-list">
+      <div class="mdl-list__item"> </div>
+        <span class="mdl-list__item-primary-content mdl-layout-title"> Spreadsheets (Section Title)</span>
+        <span class="mdl-list__item-secondary-action">
+        <button class="mdl-button mdl-js.button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" 
+                rel="create" 
+                type="button">Create</button>
+        </span>
+    </div>
+    {{#each spreadsheets}}
+    <div class="mdl-list__item">
+      <a class="mdl-list__item-primary-content"
+         href="https://docs.google.com/spreadsheets/d/{{id}}/edit"
+         target="_blank">{{name}}</a>
+      <span class="mdl-list__item-secondary-action">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+                rel="sync" data-spreadsheetid="{{id}}"
+                type="button">Syncc</button>
+      </span>
+    </div>
+    {{/each}}
+  </section>
+  </div>

@@ -55,5 +55,41 @@ function onSignIn(user) {
 }
 
 
-// TODO: Add spreadsheet control handlers.
+// DONE: Add spreadsheet control handlers.
+// Wire up the Create and Sync Spreadsheet Buttons:
+$(function() {
+  $('button[rel="create"]').click(function(){
+    makeRequest('POST', '/spreadsheets', function(err, spreadsheet) {
+      if(err) return showError(err);
+      window.location.reload();
+    });
+  });
+  $('button[rel="sync"]').click(function(){
+    var spreadsheetId = $(this).data('spreadsheetid');
+    var url = '/spreadsheets/' + spreadsheetId + '/sync';
+    makeRequest('POST', url, function(err){
+      if(err) return showError(err);
+      showMessage('Sync Complete. Nice.');
+    });
+  });
+});
+
+function makeRequest(method, url, callback){
+  var auth = gapi.auth2.getAuthInstance();
+  if(!auth.isSignedIn.get()) {
+    return callback(new Error('Sign-in required here.'));
+  }
+  var accessToken = auth.currentUser.get().getAuthResponse().access_token;
+  setSpinnerActive(true);
+  $.ajax(url, {
+    method: method,
+    headers: {
+      'Authorization': 'Bearer ' + accessToken
+    },
+    success: function(response) {
+      setSpinnerActive(false);
+      return callback(new Error(response.responseJSON.message));
+    }
+  });
+}
 
